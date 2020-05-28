@@ -8,5 +8,6 @@ let landing = require('../controllers/landing');
 //   res.render('index', { title: 'Express' });
 // });
 router.get('/', landing.get_landing);
+router.post('/', landing.submit_lead);
 
 module.exports = router;
