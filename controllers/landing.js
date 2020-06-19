@@ -17,7 +17,7 @@ exports.show_leads = function(req, res, next) {
 	// guarantee that the body will be available after executing the findAll even though
 	//call is async
 	models.Lead.findAll().then(leads => {
-		res.render('landing', {title: 'Express', leads: leads});
+		res.render('lead/leads', {title: 'Express', leads: leads});
 
 	})
 }
@@ -28,32 +28,33 @@ exports.show_lead = function(req, res, next) {
 			id : req.params.lead_id
 		}
 	}).then(lead => {
-		res.render('lead', { lead: lead});
-	})
+		res.render('lead/lead', { lead: lead});
+	});
 }
 
 exports.show_edit_lead = function(req, res, next) {
+	console.log("Entered show_edit_lead");
 	return models.Lead.findOne({
 		where : {
 			id : req.params.lead_id
 		}
 	}).then(lead => {
-		res.render('lead/edit_lead', { lead: lead});
-	})
+		res.render('lead/edit_lead', { lead : lead });
+	});
 }
 
-
 exports.edit_lead = function(req, res, next) {
-	req.params.lead_id
-	req.body.lead_email
+	console.log("Entered edit_lead");
 	return models.Lead.update({
-		email:req.body.lead_email
-	}, {
+		email: req.body.lead_email
+	}, { 
 		where: {
 			id: req.params.lead_id
 		}
 	}).then(result => {
-		res.redirect('/lead/' + req.params.lead_id)
+		console.log("Entered promise");
+		console.log(req.params.lead_id); //i added this
+		res.redirect('/lead/' + req.params.lead_id);
 	})
 }
 
